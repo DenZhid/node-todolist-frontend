@@ -2,7 +2,8 @@ const TOKEN_KEY = "todo_token";
 
 export function getApiBase(): string {
   const base = import.meta.env.VITE_API_BASE_URL;
-  if (!base || typeof base !== "string") {
+  // Empty string is valid: same-origin (e.g. nginx reverse proxy)
+  if (typeof base !== "string") {
     throw new Error("VITE_API_BASE_URL is not configured");
   }
   return base.replace(/\/$/, "");

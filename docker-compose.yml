@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        # Same-origin; nginx reverse-proxies /api and /login to API_UPSTREAM
+        VITE_API_BASE_URL: /
+    ports:
+      - "${PORT:-8080}:80"
+    environment:
+      API_UPSTREAM: ${API_UPSTREAM:-host.docker.internal:3000}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
