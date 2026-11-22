@@ -5,8 +5,11 @@ services:
       args:
         # Same-origin; nginx reverse-proxies /api and /login to API_UPSTREAM
         VITE_API_BASE_URL: /
+        # Self-signed cert CN (use VPS IP or hostname)
+        SSL_CN: ${SSL_CN:-localhost}
     ports:
-      - "${PORT:-8080}:80"
+      - "${HTTP_PORT:-8080}:80"
+      - "${HTTPS_PORT:-8443}:443"
     environment:
       API_UPSTREAM: ${API_UPSTREAM:-host.docker.internal:3000}
     extra_hosts:
